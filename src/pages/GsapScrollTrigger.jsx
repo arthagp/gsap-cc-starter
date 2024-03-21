@@ -1,5 +1,35 @@
+import { ScrollTrigger } from 'gsap/all'
+import gsap from "gsap";
+import { useGSAP } from '@gsap/react';
+import { useRef } from 'react';
+
+gsap.registerPlugin(ScrollTrigger)
 const GsapScrollTrigger = () => {
   // TODO: Implement the gsap scroll trigger
+  const scrollRef = useRef() // reference ini di gunakan untuk mendapatkan current children karena ada dua element disana.
+
+  useGSAP(() => {
+
+    const boxes = gsap.utils.toArray(scrollRef.current.children)
+
+    boxes.forEach((box) => {
+      gsap.to(box, {
+        x: 300 * 3,
+        rotation: 360,
+        scale: 1.3,
+        duration: 2,
+        borderRadius: '70%',
+        scrollTrigger: {
+          trigger: box, // value nya yaitu box whixh is ini ada 2 box karena di looping
+          start: 'bottom bottom',
+          end: 'top 70%',
+          scrub: true,
+        },
+        ease: 'power1.inOut'
+      })
+    })
+  }, { scope: scrollRef })
+
 
   return (
     <main>
@@ -51,7 +81,7 @@ const GsapScrollTrigger = () => {
         </svg>
       </div>
 
-      <div className="mt-20 w-full h-screen">
+      <div className="mt-20 w-full h-screen" ref={scrollRef}>
         <div
           id="scroll-pink"
           className="scroll-box w-20 h-20 rounded-lg bg-pink-500"

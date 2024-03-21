@@ -1,5 +1,24 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 const GsapStagger = () => {
   // TODO: Implement the gsap.stagger() method
+  useGSAP(() => {
+    gsap.to('.stagger-box', {
+      y: 150,
+      rotation: 360,
+      borderRadius: '100%',
+      yoyo: true,
+      repeat: -1,
+      stagger: { // ngebuat agar animation nya di jalankan satu2. walaupun kita select target nya menggunakan classname
+        amount: 1.5,
+        grid: [2, 1],
+        axis: 'y',
+        ease: 'circ.inOut',
+        from: 'center'
+      }
+    })
+  }, [])
 
   return (
     <main>
